@@ -3,10 +3,10 @@ package mx.utng.memorymatch.domain.usecase
 import mx.utng.memorymatch.domain.repository.BestTimeRepository
 
 /**
- * Guarda el mejor tiempo si es menor al actual
+ * Obtiene el mejor tiempo registrado
  */
-class SaveBestTimeUseCase(
+class GetBestTimeUseCase(
     private val repository: BestTimeRepository
 ) {
-    suspend operator fun invoke(seconds: Long) = repository.saveBestTime(seconds)
+    suspend operator fun invoke(): Long = repository.getBestTime()
 }
