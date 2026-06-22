@@ -42,13 +42,11 @@ fun BoardScreen(
                         androidx.compose.ui.hapticfeedback.HapticFeedbackType.LongPress
                     )
                 }
-
                 GameEffect.HapticMiss -> {
                     haptic.performHapticFeedback(
                         androidx.compose.ui.hapticfeedback.HapticFeedbackType.LongPress
                     )
                 }
-
                 GameEffect.HapticVictory -> {
                     repeat(3) {
                         haptic.performHapticFeedback(
@@ -61,18 +59,12 @@ fun BoardScreen(
         }
     }
 
+    // Si el juego está en estado WON, mostrar VictoryScreen
     if (state.phase == GamePhase.WON) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color(0xFF0A0A1E)),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = "¡Ganaste!\nTiempo: ${state.elapsedSeconds}s",
-                color = Color.White
-            )
-        }
+        VictoryScreen(
+            state = state,
+            onRestart = viewModel::startNewGame
+        )
         return
     }
 
@@ -81,13 +73,11 @@ fun BoardScreen(
             .fillMaxSize()
             .background(Color(0xFF0A0A1E))
     ) {
-
         ScalingLazyColumn(
             modifier = Modifier.fillMaxSize(),
             state = scalingLazyListState,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
             item {
                 TimeText()
             }
@@ -102,14 +92,11 @@ fun BoardScreen(
             val rows = state.board.chunked(3)
 
             items(rows) { rowCards ->
-
                 Row(
                     modifier = Modifier.padding(4.dp),
                     horizontalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
-
                     rowCards.forEach { card ->
-
                         CardItem(
                             card = card,
                             onTap = {
@@ -119,11 +106,8 @@ fun BoardScreen(
                             modifier = Modifier.size(52.dp)
                         )
                     }
-
                     repeat(3 - rowCards.size) {
-                        Box(
-                            modifier = Modifier.size(52.dp)
-                        )
+                        Box(modifier = Modifier.size(52.dp))
                     }
                 }
             }
